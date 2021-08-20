@@ -1,6 +1,2 @@
-import axios from 'axios';
+import { User } from './user';
 
-axios.post('http://localhost:3000/users', {
-  name: 'Manny',
-  age: 34,
-})
