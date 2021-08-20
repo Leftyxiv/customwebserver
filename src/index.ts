@@ -1,3 +1,6 @@
-import { User } from './user';
+import axios from 'axios';
 
-const user = new User({ name: 'Manny', age: 34});
+axios.post('http://localhost:3000/users', {
+  name: 'Manny',
+  age: 34,
+})
