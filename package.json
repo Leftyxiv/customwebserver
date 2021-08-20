@@ -10,5 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "json-server": "^0.16.3"
   }
 }

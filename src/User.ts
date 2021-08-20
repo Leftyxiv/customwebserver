@@ -16,9 +16,16 @@ export class User {
     Object.assign(this.data, update);
   }
   on(eventName: string, callback: Callback): void {
-    this.data[eventName] = callback;
+    const handlers = this.events[eventName] || [];
+    handlers.push(callback)
+    this.events[eventName] = handlers;
   }
-  trigger(eventName: string, data: UserProps): void {
-    this.data[eventName](data);
+  trigger(eventName: string): void {
+    const handlers = this.events[eventName];
+
+    if (!handlers || handlers.length === 0) {
+      return;
+    }
+    handlers.forEach(handler => handler());
   }
 }

@@ -142,11 +142,21 @@ var User = function () {
   };
 
   User.prototype.on = function (eventName, callback) {
-    this.data[eventName] = callback;
+    var handlers = this.events[eventName] || [];
+    handlers.push(callback);
+    this.events[eventName] = handlers;
   };
 
-  User.prototype.trigger = function (eventName, data) {
-    this.data[eventName](data);
+  User.prototype.trigger = function (eventName) {
+    var handlers = this.events[eventName];
+
+    if (!handlers || handlers.length === 0) {
+      return;
+    }
+
+    handlers.forEach(function (handler) {
+      return handler();
+    });
   };
 
   return User;
