@@ -17,4 +17,8 @@ export class User {
   constructor(props?: UserProps) {
     this.attributes = new Attributes<UserProps>(props);
   }
+
+  get on() {
+    return this.events.on;
+  }
 }
