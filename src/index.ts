@@ -1,5 +1,5 @@
-import { User } from './user';
+import axios, { AxiosResponse } from 'axios';
 
-const user = User.build({ id: 2, name: 'Bob' });
-
-console.log(user);
+axios.get('http://localhost:3000/users').then((response: AxiosResponse) => {
+    console.log(response.data);
+});
