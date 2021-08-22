@@ -47,5 +47,10 @@ export class User {
   }
 
   save(): void {
-    
+    this.sync.save(this.attributes.getAll()).then((res: AxiosResponse): void => {
+      this.trigger('save');
+    }) .catch((err: Error): void => {
+      throw err;
+    });
+  }
 }
