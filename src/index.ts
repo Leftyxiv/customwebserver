@@ -1,8 +1,4 @@
-import { User } from './User';
-import axios, { AxiosResponse } from 'axios';
+import { UserForm } from './views/UserForm';
 
-axios.get('http://localhost:3000/users').then((response: AxiosResponse) => {
-    console.log(response.data);
-});
-
-const collection = User.buildUserCollection();
+const userForm = new UserForm(document.getElementById('root'));
+userForm.render();
