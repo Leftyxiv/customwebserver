@@ -24,22 +24,16 @@ export class Model<T extends hasId> {
     private attributes: ModelAttrs<T>, 
     private sync: Sync<T>,
     private events: Events) {}
-
-    get on() {
-      return this.events.on;
-    }
-    get trigger() {
-      return this.events.trigger;
-    }
-    get get() {
-      return this.attributes.get;
-    }
-  
+    
+    on = this.events.on;
+    trigger = this.events.trigger;
+    get = this.attributes.get;
+    
     set(props: T): void {
       this.attributes.set(props);
       this.events.trigger('change');
     }
-  
+    
     fetch(): void {
       const id = this.attributes.get('id');
       if (typeof id !== 'number') {
@@ -51,7 +45,7 @@ export class Model<T extends hasId> {
         throw err;
       });
     }
-  
+    
     save(): void {
       this.sync.save(this.attributes.getAll()).then((res: AxiosResponse): void => {
         this.trigger('save');
@@ -59,4 +53,15 @@ export class Model<T extends hasId> {
         throw err;
       });
     }
-}
+  }
+
+
+  // get on() {
+  //   return this.events.on;
+  // }
+  // get trigger() {
+  //   return this.events.trigger;
+  // }
+  // get get() {
+  //   return this.attributes.get;
+  // }
