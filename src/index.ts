@@ -1,4 +1,4 @@
-import { UserForm } from './views/UserForm';
+import { UserEdit } from './views/UserEdit';
 import { User } from './User';
 
 const user = User.build({
@@ -12,5 +12,6 @@ if (!root) {
   throw new Error('Missing root element');
 }
 
-const userForm = new UserForm(root, user);
-userForm.render();
+const userEdit = new UserEdit(root, user);
+userEdit.render();
+console.log(userEdit);
