@@ -6,5 +6,11 @@ const user = User.build({
   age: 30,
 })
 
-const userForm = new UserForm(document.getElementById('root'), user);
+const root = document.getElementById('root');
+
+if (!root) {
+  throw new Error('Missing root element');
+}
+
+const userForm = new UserForm(root, user);
 userForm.render();

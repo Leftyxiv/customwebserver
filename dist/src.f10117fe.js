@@ -133,11 +133,15 @@ var UserForm = function () {
     this.model = model;
 
     this.changeName = function () {
-      var name = _this.parent.querySelector('input').value;
+      var input = _this.parent.querySelector('input');
 
-      _this.model.set({
-        name: name
-      });
+      if (input) {
+        var name = input.value;
+
+        _this.model.set({
+          name: name
+        });
+      }
     };
 
     this.randomizeAge = function () {
@@ -2314,7 +2318,13 @@ var user = User_1.User.build({
   name: 'John Doe',
   age: 30
 });
-var userForm = new UserForm_1.UserForm(document.getElementById('root'), user);
+var root = document.getElementById('root');
+
+if (!root) {
+  throw new Error('Missing root element');
+}
+
+var userForm = new UserForm_1.UserForm(root, user);
 userForm.render();
 },{"./views/UserForm":"src/views/UserForm.ts","./User":"src/User.ts"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
