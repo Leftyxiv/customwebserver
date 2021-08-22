@@ -21,4 +21,15 @@ export class User {
   get on() {
     return this.events.on;
   }
+  get trigger() {
+    return this.events.trigger;
+  }
+  get get() {
+    return this.attributes.get;
+  }
+
+  set(props: UserProps): void {
+    this.attributes.set(props);
+    this.events.trigger('change');
+  }
 }
