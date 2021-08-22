@@ -138,6 +138,10 @@ var View = function () {
 
   ;
 
+  View.prototype.eventsMap = function () {
+    return {};
+  };
+
   View.prototype.bindEvents = function (fragment) {
     var eventsMap = this.eventsMap();
 
@@ -213,6 +217,10 @@ var UserForm = function (_super) {
   function UserForm() {
     var _this = _super !== null && _super.apply(this, arguments) || this;
 
+    _this.saveModel = function () {
+      _this.model.save();
+    };
+
     _this.changeName = function () {
       var input = _this.parent.querySelector('input');
 
@@ -235,12 +243,13 @@ var UserForm = function (_super) {
   UserForm.prototype.eventsMap = function () {
     return {
       'click:#randomAge': this.randomizeAge,
-      'click:#changeName': this.changeName
+      'click:#changeName': this.changeName,
+      'click:#saveModel': this.saveModel
     };
   };
 
   UserForm.prototype.template = function () {
-    return "\n    <div>\n      <h1>User Form</h1>\n      <div>User name: " + this.model.get('name') + "</div>\n      <div>User age: " + this.model.get('age') + "</div>\n      <input id='inputElement'/>\n      <button id='changeName'>Change name</button>\n      <button id='randomAge'>Set random age</button>\n    </div>\n    ";
+    return "\n    <div>\n      <input id='inputElement' placeholder=\"" + this.model.get('name') + "\"/>\n      <button id='changeName'>Change name</button>\n      <button id='randomAge'>Set random age</button>\n      <button id='saveModel'>Save User</button>\n    </div>\n    ";
   };
 
   return UserForm;
@@ -2404,7 +2413,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "1449" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "6775" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
