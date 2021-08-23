@@ -131,6 +131,7 @@ var View = function () {
 
     this.parent = parent;
     this.model = model;
+    this.regions = {};
     this.model.on('change', function () {
       _this.render();
     });
@@ -141,6 +142,12 @@ var View = function () {
   View.prototype.eventsMap = function () {
     return {};
   };
+
+  View.prototype.regionsMap = function () {
+    return {};
+  };
+
+  ;
 
   View.prototype.bindEvents = function (fragment) {
     var eventsMap = this.eventsMap();
@@ -160,11 +167,33 @@ var View = function () {
     }
   };
 
+  View.prototype.mapRegions = function (fragment) {
+    var regionsMap = this.regionsMap();
+
+    for (var regionKey in regionsMap) {
+      var selector = regionsMap[regionKey];
+      var element = fragment.querySelector(selector);
+
+      if (element) {
+        this.regions[regionKey] = element;
+      }
+    }
+  };
+
+  View.prototype.onRender = function () {// FIX ME WTF
+    // new UserShow(this.regions.userShow, this.model).render();
+    // new UserForm(this.regions.userForm, this.model).render();
+  };
+
+  ;
+
   View.prototype.render = function () {
     this.parent.innerHTML = '';
     var templateElement = document.createElement('template');
     templateElement.innerHTML = this.template();
     this.bindEvents(templateElement.content);
+    this.mapRegions(templateElement.content);
+    this.onRender();
     this.parent.append(templateElement.content);
   };
 
@@ -173,7 +202,7 @@ var View = function () {
 }();
 
 exports.View = View;
-},{}],"src/views/UserForm.ts":[function(require,module,exports) {
+},{}],"src/views/UserEdit.ts":[function(require,module,exports) {
 "use strict";
 
 var __extends = this && this.__extends || function () {
@@ -207,55 +236,34 @@ var __extends = this && this.__extends || function () {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.UserForm = void 0;
+exports.UserEdit = void 0;
 
 var View_1 = require("./View");
 
-var UserForm = function (_super) {
-  __extends(UserForm, _super);
+var UserEdit = function (_super) {
+  __extends(UserEdit, _super);
 
-  function UserForm() {
-    var _this = _super !== null && _super.apply(this, arguments) || this;
-
-    _this.saveModel = function () {
-      _this.model.save();
-    };
-
-    _this.changeName = function () {
-      var input = _this.parent.querySelector('input');
-
-      if (input) {
-        var name = input.value;
-
-        _this.model.set({
-          name: name
-        });
-      }
-    };
-
-    _this.randomizeAge = function () {
-      _this.model.setRandomAge();
-    };
-
-    return _this;
+  function UserEdit() {
+    return _super !== null && _super.apply(this, arguments) || this;
   }
 
-  UserForm.prototype.eventsMap = function () {
+  UserEdit.prototype.regionsMap = function () {
     return {
-      'click:#randomAge': this.randomizeAge,
-      'click:#changeName': this.changeName,
-      'click:#saveModel': this.saveModel
+      userShow: '#userShow',
+      userForm: '#userForm'
     };
   };
 
-  UserForm.prototype.template = function () {
-    return "\n    <div>\n      <input id='inputElement' placeholder=\"" + this.model.get('name') + "\"/>\n      <button id='changeName'>Change name</button>\n      <button id='randomAge'>Set random age</button>\n      <button id='saveModel'>Save User</button>\n    </div>\n    ";
+  ;
+
+  UserEdit.prototype.template = function () {
+    return "\n    <div>\n      <div id='userShow'></div>\n      <div id='userForm'></div>\n    </div>\n    ";
   };
 
-  return UserForm;
+  return UserEdit;
 }(View_1.View);
 
-exports.UserForm = UserForm;
+exports.UserEdit = UserEdit;
 },{"./View":"src/views/View.ts"}],"src/models/Eventing.ts":[function(require,module,exports) {
 "use strict";
 
@@ -2369,7 +2377,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var UserForm_1 = require("./views/UserForm");
+var UserEdit_1 = require("./views/UserEdit");
 
 var User_1 = require("./User");
 
@@ -2383,9 +2391,10 @@ if (!root) {
   throw new Error('Missing root element');
 }
 
-var userForm = new UserForm_1.UserForm(root, user);
-userForm.render();
-},{"./views/UserForm":"src/views/UserForm.ts","./User":"src/User.ts"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var userEdit = new UserEdit_1.UserEdit(root, user);
+userEdit.render();
+console.log(userEdit);
+},{"./views/UserEdit":"src/views/UserEdit.ts","./User":"src/User.ts"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -2413,7 +2422,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "6775" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "1450" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
